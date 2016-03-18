@@ -1,3 +1,4 @@
+/*eslint-disable*/
 'use strict';
 
 /**
@@ -7,7 +8,7 @@
  * @param err Error object passed.
  * @returns {string} Error message to be sent in reply.
  */
-exports.getErrorMessage = function (err) {
+exports.getErrorMessage = function(err) {
   var message = '';
 
   if (err.code === 'E_VALIDATION') {

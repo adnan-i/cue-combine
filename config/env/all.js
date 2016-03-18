@@ -43,20 +43,27 @@ module.exports = {
   assets: {
     lib: {
       css: [
-        'public/lib/bootstrap/dist/css/bootstrap.css',
-        'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+        'public/lib/angular-material/angular-material.css',
+        'public/lib/dropzone/dist/dropzone.css',
+        'public/css/style.css',
+        // 'public/lib/bootstrap/dist/css/bootstrap.css',
+        // 'public/lib/bootstrap/dist/css/bootstrap-theme.css',
       ],
       js: [
+        'https://code.jquery.com/jquery-2.1.1.min.js',
         'public/lib/angular/angular.js',
+        'public/lib/angular-aria/angular-aria.js',
         'public/lib/angular-resource/angular-resource.js',
         'public/lib/angular-animate/angular-animate.js',
         'public/lib/angular-ui-router/release/angular-ui-router.js',
-        'public/lib/angular-ui-utils/ui-utils.js',
-        'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
+        // 'public/lib/angular-ui-utils/ui-utils.js',
+        'public/lib/angular-material/angular-material.js',
+        'public/lib/dropzone/dist/dropzone.js',
+        // 'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
       ]
     },
     css: [
-      'public/modules/**/css/*.css'
+      // 'public/css/*.css'
     ],
     js: [
       'public/config.js',

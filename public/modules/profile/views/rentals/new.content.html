@@ -1,0 +1,24 @@
+New Rental
+
+<form name="form" ng-submit="ctrl.save()" novalidate autocomplete="off" layout="column">
+
+  <md-input-container>
+    <label>Rental Name</label>
+    <input type="text" ng-model="ctrl.rental.name" required md-maxlength="30">
+    <div ng-messages="ctrl.rental.$error">
+      <div ng-message="required">This is required.</div>
+      <div ng-message="md-maxlength">Rental name length can't exceed 30 characters.</div>
+    </div>
+  </md-input-container>
+
+  <p>Rental type</p>
+  <md-radio-group ng-model="ctrl.rental.type">
+    <md-radio-button value="house" class="md-primary">House</md-radio-button>
+    <md-radio-button value="apartment">Apartment</md-radio-button>
+  </md-radio-group>
+
+  <div layout layout-align="center right">
+    <md-button type="submit" class="md-raised md-primary">Create</md-button>
+  </div>
+
+</form>

@@ -1,0 +1,64 @@
+<section layout="column" layout-align="center center">
+
+  <h3 class="md-display-1">Sign up using your social accounts</h3>
+
+  <div layout="row">
+
+    <a href="/auth/facebook">
+      <md-icon md-font-set="fontawesome" md-font-icon="fa-facebook-square" class="fa fa-5x" alt="Signup with Facebook"></md-icon>
+      <!-- <img src="/modules/users/img/buttons/facebook.png"> -->
+    </a>
+
+    <a href="/auth/twitter">
+      <md-icon md-font-set="fontawesome" md-font-icon="fa-twitter-square" class="fa fa-5x" alt="Signup with Twitter"></md-icon>
+      <!-- <img src="/modules/users/img/buttons/twitter.png"> -->
+    </a>
+
+    <a href="/auth/google">
+      <md-icon md-font-set="fontawesome" md-font-icon="fa-google-plus-square" class="fa fa-5x" alt="Signup with Google"></md-icon>
+      <!-- <img src="/modules/users/img/buttons/google.png"> -->
+    </a>
+
+    <a href="/auth/linkedin">
+      <md-icon md-font-set="fontawesome" md-font-icon="fa-linkedin-square" class="fa fa-5x" alt="Signup with LinkedIn"></md-icon>
+      <!-- <img src="/modules/users/img/buttons/linkedin.png"> -->
+    </a>
+
+<!--     <a href="/auth/github">
+      <img src="/modules/users/img/buttons/github.png">
+    </a> -->
+  </div>
+
+  <h4 class="md-display-1">Or with your email</h4>
+
+  <form name="form" ng-submit="ctrl.signin()" novalidate autocomplete="off" layout="column">
+
+    <md-input-container>
+      <label>Email</label>
+      <input type="email" ng-model="ctrl.user.email" required>
+      <div ng-messages="ctrl.user.$error">
+        <div ng-message="required">This is required.</div>
+        <div ng-message="email">Doesn't look like a valid email.</div>
+      </div>
+    </md-input-container>
+
+    <md-input-container>
+      <label>Password</label>
+      <input type="password" ng-model="ctrl.user.password" required>
+      <div ng-messages="ctrl.user.$error">
+        <div ng-message="required">This is required.</div>
+      </div>
+    </md-input-container>
+
+    <div layout layout-align="center right">
+      <md-button type="submit" class="md-raised md-primary">Signin</md-button>
+    </div>
+
+    <div class="forgot-password">
+      <a href="/#!/password/forgot">Forgot your password?</a>
+    </div>
+
+  </form>
+
+</section>
+

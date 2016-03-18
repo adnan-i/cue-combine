@@ -1,0 +1,11 @@
+{
+  "root": false,
+  "env": {
+    "browser": true,
+    "jquery": true
+  },
+  "globals": {
+    "angular": true,
+    "ApplicationConfiguration": true
+  }
+}

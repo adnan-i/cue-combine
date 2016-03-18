@@ -1,41 +1,42 @@
+/*eslint-disable */
 'use strict';
 
 /**
  * Module dependencies.
  */
-var Boom           = require('boom'),
-    Errorhandler   = require('../errors.server.controller'),
-    Config         = require('../../../config/config'),
-    Nodemailer     = require('nodemailer'),
-    Async          = require('async'),
-    Crypto         = require('crypto'),
-    login          = require('./users.authentication.server.controller').login;
+var Boom = require('boom'),
+  Errorhandler = require('../errors.server.controller'),
+  Config = require('../../../config/config'),
+  Nodemailer = require('nodemailer'),
+  Async = require('async'),
+  Crypto = require('crypto'),
+  login = require('./users.authentication.server.controller').login;
 
 var smtpTransport = Nodemailer.createTransport(Config.mailer.options);
 
 /**
  * Forgot for reset password (forgot POST)
  */
-exports.forgot = function (request, reply, next) {
+exports.forgot = function(request, reply, next) {
 
   var User = request.collections.user;
 
   Async.waterfall([
     // Generate random token
-    function (done) {
+    function(done) {
 
-      Crypto.randomBytes(20, function (err, buffer) {
+      Crypto.randomBytes(20, function(err, buffer) {
         var token = buffer.toString('hex');
         done(err, token);
       });
     },
     // Lookup user by username
-    function (token, done) {
+    function(token, done) {
 
       if (request.payload.username) {
         User.findOne({
           username: request.payload.username
-        }, function (err, user) {
+        }, function(err, user) {
 
           if (!user) {
             return reply(Boom.badRequest('No account with that username has been found'));
@@ -48,7 +49,9 @@ exports.forgot = function (request, reply, next) {
               resetPasswordExpires: passwordExpiresAt.toISOString()
             };
 
-            User.update({username: user.username}, newUser, function (err, updatedUser) {
+            User.update({
+              username: user.username
+            }, newUser, function(err, updatedUser) {
               done(err, token, user);
             });
           }
@@ -57,18 +60,18 @@ exports.forgot = function (request, reply, next) {
         return reply(Boom.badRequest('Username field must not be blank'));
       }
     },
-    function (token, user, done) {
+    function(token, user, done) {
 
       request.server.render('templates/reset-password-email', {
         name: user.displayName,
         appName: Config.app.title,
         url: 'http://' + request.headers.host + '/auth/reset/' + token
-      }, function (err, emailHTML) {
+      }, function(err, emailHTML) {
         done(err, emailHTML, user);
       });
     },
     // If valid email, send reset email using service
-    function (emailHTML, user, done) {
+    function(emailHTML, user, done) {
 
       var mailOptions = {
         to: user.email,
@@ -76,10 +79,12 @@ exports.forgot = function (request, reply, next) {
         subject: 'Password Reset',
         html: emailHTML
       };
-      smtpTransport.sendMail(mailOptions, function (err) {
+      smtpTransport.sendMail(mailOptions, function(err) {
 
         if (!err) {
-          reply({message: 'An email has been sent to ' + user.email + ' with further instructions.'});
+          reply({
+            message: 'An email has been sent to ' + user.email + ' with further instructions.'
+          });
         } else {
           return reply(Boom.badRequest('Failure sending email'));
         }
@@ -87,7 +92,7 @@ exports.forgot = function (request, reply, next) {
         done(err);
       });
     }
-  ], function (err) {
+  ], function(err) {
 
     if (err) return reply.continue(err);
   });
@@ -96,7 +101,7 @@ exports.forgot = function (request, reply, next) {
 /**
  * Reset password GET from email token
  */
-exports.validateResetToken = function (request, reply) {
+exports.validateResetToken = function(request, reply) {
 
   var User = request.collections.user;
   var dateNow = new Date();
@@ -106,7 +111,7 @@ exports.validateResetToken = function (request, reply) {
     resetPasswordExpires: {
       '>': dateNow.toISOString()
     }
-  }, function (err, user) {
+  }, function(err, user) {
 
     if (!user) {
       return reply.redirect('/#!/password/reset/invalid');
@@ -119,7 +124,7 @@ exports.validateResetToken = function (request, reply) {
 /**
  * Reset password POST from email token
  */
-exports.reset = function (request, reply) {
+exports.reset = function(request, reply) {
 
   var User = request.collections.user;
 
@@ -128,7 +133,7 @@ exports.reset = function (request, reply) {
 
   Async.waterfall([
 
-    function (done) {
+    function(done) {
 
       var dateNow = new Date();
       User.findOne({
@@ -136,7 +141,7 @@ exports.reset = function (request, reply) {
         resetPasswordExpires: {
           '>': dateNow.toISOString()
         }
-      }, function (err, user) {
+      }, function(err, user) {
 
         if (!err && user) {
           if (passwordDetails.newPassword === passwordDetails.verifyPassword) {
@@ -147,7 +152,9 @@ exports.reset = function (request, reply) {
               hasNewPassword: true
             };
 
-            User.update({username: user.username}, newUser, function (err) {
+            User.update({
+              username: user.username
+            }, newUser, function(err) {
 
               if (err) {
                 return reply(Boom.badRequest(Errorhandler.getErrorMessage(err)));
@@ -157,7 +164,7 @@ exports.reset = function (request, reply) {
 
                 // Copy user and remove sensetive and useless data
                 user = user.toJSON();
-                if(user !== {}){
+                if (user !== {}) {
                   // Create a new session to login the user
                   return login(request, reply, user, reply(user));
                 }
@@ -171,18 +178,18 @@ exports.reset = function (request, reply) {
         }
       });
     },
-    function (user, done) {
+    function(user, done) {
 
       request.server.render('templates/reset-password-confirm-email', {
         name: user.displayName,
         appName: Config.app.title
-      }, function (err, emailHTML) {
+      }, function(err, emailHTML) {
 
         done(err, emailHTML, user);
       });
     },
     // If valid email, send reset email using service
-    function (emailHTML, user, done) {
+    function(emailHTML, user, done) {
 
       var mailOptions = {
         to: user.email,
@@ -191,12 +198,12 @@ exports.reset = function (request, reply) {
         html: emailHTML
       };
 
-      smtpTransport.sendMail(mailOptions, function (err) {
+      smtpTransport.sendMail(mailOptions, function(err) {
 
         done(err, 'done');
       });
     }
-  ], function (err) {
+  ], function(err) {
 
     if (err) return reply.continue(err);
   });
@@ -205,7 +212,7 @@ exports.reset = function (request, reply) {
 /**
  * Change Password
  */
-exports.changePassword = function (request, reply) {
+exports.changePassword = function(request, reply) {
 
   var User = request.collections.user;
 
@@ -214,7 +221,9 @@ exports.changePassword = function (request, reply) {
 
   if (request.auth.isAuthenticated) {
     if (passwordDetails.newPassword) {
-      User.findOne({id: request.auth.credentials.id}, function (err, user) {
+      User.findOne({
+        id: request.auth.credentials.id
+      }, function(err, user) {
 
         if (!err && user) {
           if (user.authenticate(passwordDetails.currentPassword)) {
@@ -222,7 +231,9 @@ exports.changePassword = function (request, reply) {
               user.password = passwordDetails.newPassword;
               user.hasNewPassword = true;
 
-              User.update({id: user.id}, user).exec(function (err, user) {
+              User.update({
+                id: user.id
+              }, user).exec(function(err, user) {
 
                 if (err) {
                   return reply(Boom.badRequest(Errorhandler.getErrorMessage(err)));
@@ -235,7 +246,7 @@ exports.changePassword = function (request, reply) {
                   // Copy user and remove sensitive and useless data
                   user = user[0].toJSON();
 
-                  if(user !== {}){
+                  if (user !== {}) {
                     // Create a new session to login the user
                     return login(request, reply, user,
                       reply({

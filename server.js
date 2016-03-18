@@ -2,9 +2,13 @@
 /**
  * Module dependencies.
  */
-var Init    = require('./config/init')(),
-    Config  = require('./config/config'),
-    Chalk   = require('chalk');
+require('./config/init')();
+var Config = require('./config/config');
+var Chalk = require('chalk');
+
+var ioc = require('electrolyte');
+ioc.use(ioc.node('.'));
+
 
 /**
  * Main application entry file.
@@ -12,13 +16,14 @@ var Init    = require('./config/init')(),
  */
 
 // Init the hapi application
-var server = require('./config/hapi')();
+// var server = require('./config/hapi')();
+var server = ioc.create('config/hapi')();
 
 // Start the server when plugins are loaded
 
-server.on('pluginsLoaded', function(){
+server.on('pluginsLoaded', function() {
 
-  server.start(function(){
+  server.start(function() {
     // Logging initialization
     console.log('--');
     console.log(Chalk.green(Config.app.title + ' application started'));
@@ -35,5 +40,3 @@ server.on('pluginsLoaded', function(){
 
 // Expose server
 exports = module.exports = server;
-
-

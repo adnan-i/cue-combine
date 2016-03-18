@@ -3,39 +3,44 @@
 /**
  * Module dependencies.
  */
-var _     = require('lodash'),
-    Boom  = require('boom');
+var _ = require('lodash');
+var Boom = require('boom');
 
 /**
  * User middleware
  */
-exports.userByID = function (request, reply) {
+exports.userByID = function(request, reply) {
 
   var User = request.collections.user;
   var id = request.param.id;
-  User.findOne({id: id}).exec(function (err, user) {
+  User.findOne({
+    id: id
+  }).exec(function(err, user) {
 
-    if (err)
+    if (err) {
       return reply(err);
+    }
 
-    if (!user)
+    if (!user){
       return reply(new Error('Failed to load User ' + id));
+    }
 
     request.profile = user;
-    reply.continue();
+    return reply.continue();
+
   });
 };
 
 /**
  * User authorizations routing middleware
  */
-exports.hasAuthorization = function (roles) {
+exports.hasAuthorization = function(roles) {
 
   var _this = this;
 
-  return function (request, reply) {
+  return function(request, reply) {
 
-    _this.requireplyLogin(request, reply, function () {
+    _this.requireplyLogin(request, reply, function() {
 
       if (_.intersection(request.payload.user.roles, roles).length) {
         return reply.continue();

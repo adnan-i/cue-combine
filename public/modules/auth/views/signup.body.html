@@ -1,0 +1,96 @@
+<section layout="column" layout-align="center center">
+
+  <h3 class="md-display-1">Sign in using your social accounts</h3>
+
+  <div layout="row">
+
+    <a href="/auth/facebook">
+      <md-icon md-font-set="fontawesome" md-font-icon="fa-facebook-square" class="fa fa-5x" alt="Signup with Facebook"></md-icon>
+      <!-- <img src="/modules/users/img/buttons/facebook.png"> -->
+    </a>
+
+    <a href="/auth/twitter">
+      <md-icon md-font-set="fontawesome" md-font-icon="fa-twitter-square" class="fa fa-5x" alt="Signup with Twitter"></md-icon>
+      <!-- <img src="/modules/users/img/buttons/twitter.png"> -->
+    </a>
+
+    <a href="/auth/google">
+      <md-icon md-font-set="fontawesome" md-font-icon="fa-google-plus-square" class="fa fa-5x" alt="Signup with Google"></md-icon>
+      <!-- <img src="/modules/users/img/buttons/google.png"> -->
+    </a>
+
+    <a href="/auth/linkedin">
+      <md-icon md-font-set="fontawesome" md-font-icon="fa-linkedin-square" class="fa fa-5x" alt="Signup with LinkedIn"></md-icon>
+      <!-- <img src="/modules/users/img/buttons/linkedin.png"> -->
+    </a>
+
+<!--     <a href="/auth/github">
+      <img src="/modules/users/img/buttons/github.png">
+    </a> -->
+  </div>
+
+  <h4 class="md-display-1">Or with your email</h4>
+
+  <form name="form" ng-submit="ctrl.signup()" novalidate autocomplete="off" layout="column">
+
+    <md-input-container>
+      <label>First Name</label>
+      <input type="text" ng-model="ctrl.user.firstName" required md-maxlength="10">
+      <div ng-messages="ctrl.user.$error">
+        <div ng-message="required">This is required.</div>
+        <div ng-message="md-maxlength">First name has to be less than 10 characters long.</div>
+      </div>
+    </md-input-container>
+
+    <!-- <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" required id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
+    </div> -->
+
+    <md-input-container>
+      <label>Last Name</label>
+      <input type="text" ng-model="ctrl.user.lastName" required>
+      <div ng-messages="ctrl.user.$error">
+        <div ng-message="required">This is required.</div>
+      </div>
+    </md-input-container>
+
+    <!-- <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name">
+    </div> -->
+
+    <md-input-container>
+      <label>Email</label>
+      <input type="email" ng-model="ctrl.user.email" required>
+      <div ng-messages="ctrl.user.$error">
+        <div ng-message="required">This is required.</div>
+        <div ng-message="email">Doesn't look like a valid email.</div>
+      </div>
+    </md-input-container>
+
+    <!-- <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email">
+    </div> -->
+
+    <md-input-container>
+      <label>Password</label>
+      <input type="password" ng-model="ctrl.user.password" required>
+      <div ng-messages="ctrl.user.$error">
+        <div ng-message="required">This is required.</div>
+      </div>
+    </md-input-container>
+
+    <!-- <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+    </div> -->
+
+    <div layout layout-align="center right">
+      <md-button type="submit" class="md-raised md-primary">Signup</md-button>
+    </div>
+
+  </form>
+
+</section>

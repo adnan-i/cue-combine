@@ -4,7 +4,7 @@ module.exports = {
   db: {
     pg: {
       host: process.env.PG_HOST || 'localhost',
-      port: process.env.PG_PORT ||  5432,
+      port: process.env.PG_PORT || 5432,
       poolSize: process.env.PG_POOL_SIZE || 1,
       database: process.env.PG_DB || 'hanx',
       user: process.env.PG_USER || 'hanx',
@@ -12,7 +12,7 @@ module.exports = {
     },
     redis: {
       host: process.env.REDIS_HOST || '127.0.0.1',
-      port: process.env.REDIS_PORT ||  6379,
+      port: process.env.REDIS_PORT || 6379,
       database: process.env.REDIS_DB || '',
       password: process.env.REDIS_PASSWORD || '',
       partition: process.env.REDIS_PARTITION || ''

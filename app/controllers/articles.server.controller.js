@@ -1,22 +1,23 @@
+/*eslint-disable */
 'use strict';
 
 /**
  * Module dependencies.
  */
-var Errorhandler   = require('./errors.server.controller'),
-    Boom           = require('boom');
+var Errorhandler = require('./errors.server.controller');
+var Boom = require('boom');
 
 /**
  * Create a article
  */
-exports.create = function (request, reply) {
+exports.create = function(request, reply) {
 
   var Article = request.collections.article;
   var user = request.auth.credentials;
   var article = request.payload;
   article.user = user.id;
 
-  Article.create(article, function (err, article) {
+  Article.create(article, function(err, article) {
 
     if (err) {
       return reply(Boom.badRequest(Errorhandler.getErrorMessage(err)));
@@ -35,7 +36,7 @@ exports.create = function (request, reply) {
 /**
  * Show the current article
  */
-exports.read = function (request, reply) {
+exports.read = function(request, reply) {
 
   reply(request.pre.article);
 };
@@ -43,12 +44,14 @@ exports.read = function (request, reply) {
 /**
  * Update a article
  */
-exports.update = function (request, reply) {
+exports.update = function(request, reply) {
 
   var Article = request.collections.article;
   var articleToUpdate = request.pre.article;
-  Article.update({id: articleToUpdate.id}, request.payload,
-    function (err, article) {
+  Article.update({
+      id: articleToUpdate.id
+    }, request.payload,
+    function(err, article) {
 
       article = article[0];
 
@@ -69,17 +72,19 @@ exports.update = function (request, reply) {
         reply(article);
 
       }
-  });
+    });
 };
 
 /**
  * Delete an article
  */
-exports.delete = function (request, reply) {
+exports.delete = function(request, reply) {
 
   var Article = request.collections.article;
   var article = request.pre.article;
-  Article.destroy({id: article.id}, function (err) {
+  Article.destroy({
+    id: article.id
+  }, function(err) {
 
     if (err) {
       return reply(Boom.badRequest(Errorhandler.getErrorMessage(err)));
@@ -92,17 +97,19 @@ exports.delete = function (request, reply) {
 /**
  * List of Articles
  */
-exports.list = function (request, reply) {
+exports.list = function(request, reply) {
 
   var Article = request.collections.article;
 
-  Article.find({}).sort({createdAt: 'desc'}).populate('user')
-    .exec(function (err, articles) {
+  Article.find({}).sort({
+      createdAt: 'desc'
+    }).populate('user')
+    .exec(function(err, articles) {
 
       if (err) {
         return reply(Boom.badRequest(Errorhandler.getErrorMessage(err)));
       } else {
-        articles.forEach(function(article){
+        articles.forEach(function(article) {
           article.user = {
             id: article.user.id,
             displayName: article.user.displayName,
@@ -112,18 +119,20 @@ exports.list = function (request, reply) {
         });
         reply(articles);
       }
-  });
+    });
 };
 
 /**
  * Article middleware
  */
-exports.articleByID = function (request, reply) {
+exports.articleByID = function(request, reply) {
 
   var Article = request.collections.article;
   var id = request.params.articleId;
 
-  Article.findOne({id: id}).populate('user').exec(function (err, article) {
+  Article.findOne({
+    id: id
+  }).populate('user').exec(function(err, article) {
 
     if (err) return reply(err);
     if (!article) {
@@ -142,10 +151,10 @@ exports.articleByID = function (request, reply) {
 /**
  * Article authorization middleware
  */
-exports.hasAuthorization = function (request, reply) {
+exports.hasAuthorization = function(request, reply) {
 
   if (request.pre.article.user.id.toString() !==
-      request.auth.credentials.id.toString()) {
+    request.auth.credentials.id.toString()) {
     return reply(Boom.forbidden('User is not authorized'));
   }
   reply();

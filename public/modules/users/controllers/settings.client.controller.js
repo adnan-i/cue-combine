@@ -5,16 +5,18 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
     $scope.user = Authentication.user;
 
     // If user is not signed in then redirect back home
-    if (!$scope.user) $location.path('/');
+    if (!$scope.user) {
+      $location.path('/');
+    }
 
     // Check if there are additional accounts
-    $scope.hasConnectedAdditionalSocialAccounts = function(provider) {
-      for (var i in $scope.user.additionalProvidersData) {
-        return true;
-      }
+    // $scope.hasConnectedAdditionalSocialAccounts = function(provider) {
+    //   for (var i in $scope.user.additionalProvidersData) {
+    //     return true;
+    //   }
 
-      return false;
-    };
+    //   return false;
+    // };
 
     // Check if provider is already in use with current user
     $scope.isConnectedSocialAccount = function(provider) {
@@ -59,7 +61,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
     $scope.changeUserPassword = function() {
       $scope.success = $scope.error = null;
 
-      $http.post('/users/password', $scope.passwordDetails).success(function(response) {
+      $http.post('/users/password', $scope.passwordDetails).success(function() {
         // If successful show success message and clear form
         $scope.success = true;
         $scope.passwordDetails = null;

@@ -1,94 +1,94 @@
-'use strict';
+// 'use strict';
 
-/**
- * Module dependencies.
- */
-var should     = require('should'),
-    Server     = require('../../server'),
-    Config     = require('../../config/config');
+// /**
+//  * Module dependencies.
+//  */
+// var should     = require('should'),
+//     Server     = require('../../server'),
+//     Config     = require('../../config/config');
 
-/**
- * Globals
- */
-var user, article, User, Article;
+// /**
+//  * Globals
+//  */
+// var user, article, User, Article;
 
-var init = function (cb){
+// var init = function (cb){
 
-  User = Server.plugins.dogwater.collections.user;
-  Article = Server.plugins.dogwater.collections.article;
-  cb();
-};
+//   User = Server.plugins.dogwater.collections.user;
+//   Article = Server.plugins.dogwater.collections.article;
+//   cb();
+// };
 
-/**
- * Unit tests
- */
-describe('Article Model Unit Tests:', function() {
+// /**
+//  * Unit tests
+//  */
+// describe('Article Model Unit Tests:', function() {
 
-  before(function (done) {
+//   before(function (done) {
 
-    if (Server.plugins.dogwater){
-      init(done);
-    } else {
-      Server.on('pluginsLoaded', function () {
+//     if (Server.plugins.dogwater){
+//       init(done);
+//     } else {
+//       Server.on('pluginsLoaded', function () {
 
-        init(done);
-      });
-    }
-  });
+//         init(done);
+//       });
+//     }
+//   });
 
-  beforeEach(function(done) {
+//   beforeEach(function(done) {
 
-    user = {
-      firstName: 'Full',
-      lastName: 'Name',
-      displayName: 'Full Name',
-      email: 'test@test.com',
-      provider: 'local',
-      username: 'username',
-      password: 'password'
-    };
+//     user = {
+//       firstName: 'Full',
+//       lastName: 'Name',
+//       displayName: 'Full Name',
+//       email: 'test@test.com',
+//       provider: 'local',
+//       username: 'username',
+//       password: 'password'
+//     };
 
-    User.create(user, function(err, user) {
+//     User.create(user, function(err, user) {
 
-      if (err)
-        return done(err);
-      article = {
-        title: 'Article Title',
-        content: 'Article Content',
-        user: user.id
-      };
+//       if (err)
+//         return done(err);
+//       article = {
+//         title: 'Article Title',
+//         content: 'Article Content',
+//         user: user.id
+//       };
 
-      done();
-    });
-  });
+//       done();
+//     });
+//   });
 
-  describe('Method Save', function() {
+//   describe('Method Save', function() {
 
-    it('should be able to save without problems', function(done) {
+//     it('should be able to save without problems', function(done) {
 
-      return Article.create(article, function(err, article) {
-        should.not.exist(err);
-        should.exist(article);
-        done();
-      });
-    });
+//       return Article.create(article, function(err, article) {
+//         should.not.exist(err);
+//         should.exist(article);
+//         done();
+//       });
+//     });
 
-    it('should be able to show an error when try to save without title', function(done) {
-      article.title = '';
+//     it('should be able to show an error when try to save without title', function(done) {
+//       article.title = '';
 
-      return Article.create(article, function(err, article) {
+//       return Article.create(article, function(err, article) {
 
-        should.exist(err);
-        done();
-      });
-    });
-  });
+//         should.exist(err);
+//         done();
+//       });
+//     });
+//   });
 
-  afterEach(function(done) {
+//   afterEach(function(done) {
 
-    Article.destroy({}).exec(function() {
+//     Article.destroy({}).exec(function() {
 
-      User.destroy({}).exec(done);
-    });
-  });
-});
+//       User.destroy({}).exec(done);
+//     });
+//   });
+// });

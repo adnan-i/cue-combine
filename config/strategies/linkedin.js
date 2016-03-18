@@ -3,8 +3,8 @@
 /**
  * Module dependencies.
  */
-var Config = require('../config'),
-    Users = require('../../app/controllers/users.server.controller');
+var Config = require('../config');
+var Users = require('../../app/controllers/users.server.controller');
 
 
 exports.strategyName = 'linkedin';
@@ -19,7 +19,7 @@ exports.strategyConfig = {
   isSecure: process.env.NODE_ENV === 'secure'
 };
 
-exports.preLinkedin = function (request, reply) {
+exports.preLinkedin = function(request, reply) {
 
   var profile = request.auth.credentials.profile;
   var pd = {};
@@ -27,9 +27,11 @@ exports.preLinkedin = function (request, reply) {
   pd.refreshToken = request.auth.credentials.refreshToken || undefined;
 
   var cred = profile.raw;
+  /*eslint-disable guard-for-in */
   for (var id in cred) {
     pd[id] = cred[id];
   }
+  /*eslint-enable guard-for-in */
 
   // Create the user OAuth profile
   var providerUserProfile = {

@@ -3,14 +3,14 @@
 /**
  * Module dependencies.
  */
-var Boom           = require('boom'),
-    Errorhandler   = require('../errors.server.controller.js');
+var Boom = require('boom');
+var Errorhandler = require('../errors.server.controller.js');
 
 
 /**
  * Update user details
  */
-exports.update = function (request, reply) {
+exports.update = function(request, reply) {
 
   var User = request.collections.user;
 
@@ -21,7 +21,7 @@ exports.update = function (request, reply) {
   delete request.payload.roles;
   delete request.payload.id;
 
-  User.update(reqUser.id, request.payload).exec(function (err, user) {
+  User.update(reqUser.id, request.payload).exec(function(err, user) {
     if (err) {
       return reply(Boom.badRequest(Errorhandler.getErrorMessage(err)));
 
@@ -30,11 +30,11 @@ exports.update = function (request, reply) {
 
       request.server.app.authCache.set(request.auth.artifacts.id, user,
         1000 * 60 * 60 * 24,
-        function (err) {
-
-          if (err) {
-            return reply(Boom.badRequest(err));
+        function(_err) {
+          if (_err) {
+            return reply(Boom.badRequest(_err));
           }
+          return false;
         });
       return reply(user);
     }
@@ -44,10 +44,10 @@ exports.update = function (request, reply) {
 /**
  * Send User
  */
-exports.me = function (request, reply) {
+exports.me = function(request, reply) {
 
   var user = request.auth.credentials;
-    reply({
-      user: user
-    });
+  reply({
+    user: user
+  });
 };

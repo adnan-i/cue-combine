@@ -1,0 +1,7 @@
+<md-list>
+  <md-list-item ng-repeat="user in ctrl.users">
+    <md-button ng-click="ctrl.selectUser($index)" ng-class="{'selected': user === ctrl.selected}" aria-label="Select user">
+      <md-icon md-svg-src="{{user.avatar}}" class="avatar"></md-icon>{{user.name}}
+    </md-button>
+  </md-list-item>
+</md-list>

@@ -1,15 +1,16 @@
+/*eslint-disable valid-jsdoc */
 'use strict';
 
 /**
  * Module dependencies.
  */
-var glob   = require('glob'),
-    chalk  = require('chalk');
+var glob = require('glob');
+var chalk = require('chalk');
 
 /**
  * Module init function.
  */
-module.exports = function () {
+module.exports = function() {
 
   /**
    * Before we begin, lets set the environment variable

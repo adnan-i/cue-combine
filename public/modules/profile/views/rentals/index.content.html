@@ -1,0 +1,13 @@
+Your Rentals
+
+<md-button class="md-fab" aria-label="Add Rental" ui-sref=".new">
+  <md-icon>add</md-icon>
+</md-button>
+
+
+<md-list>
+  <md-list-item class="md-3-line" ng-repeat="rental in ctrl.rentals">
+    <a ui-sref=".edit({id: rental.id})">{{rental.name}}</p>
+    <a ui-sref=".images({id: rental.id})">Images</p>
+  </md-list-item>
+</md-list>

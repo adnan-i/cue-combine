@@ -25,7 +25,7 @@ module.exports = function(grunt) {
       },
       serverJS: {
         files: watchFiles.serverJS,
-        tasks: ['jshint'],
+        tasks: ['eslint'],
         options: {
           livereload: true
         }
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
       },
       clientJS: {
         files: watchFiles.clientJS,
-        tasks: ['jshint'],
+        tasks: ['eslint'],
         options: {
           livereload: true
         }
@@ -55,13 +55,8 @@ module.exports = function(grunt) {
         tasks: ['test:server'],
       }
     },
-    jshint: {
-      all: {
-        src: watchFiles.clientJS.concat(watchFiles.serverJS),
-        options: {
-          jshintrc: true
-        }
-      }
+    eslint: {
+      target: watchFiles.clientJS.concat(watchFiles.serverJS)
     },
     csslint: {
       options: {
@@ -147,13 +142,13 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-        localConfig: {
-              src: 'config/env/local.example.js',
-              dest: 'config/env/local.js',
-              filter: function() {
-                return !fs.existsSync('config/env/local.js');
-              }
+      localConfig: {
+        src: 'config/env/local.example.js',
+        dest: 'config/env/local.js',
+        filter: function() {
+          return !fs.existsSync('config/env/local.js');
         }
+      }
     }
   });
 
@@ -165,7 +160,7 @@ module.exports = function(grunt) {
 
   // A Task for loading the configuration object
   grunt.task.registerTask('loadConfig', 'Task that loads the config into a grunt option.', function() {
-    var init = require('./config/init')();
+    require('./config/init')();
     var config = require('./config/config');
 
     grunt.config.set('applicationJavaScriptFiles', config.assets.js);
@@ -182,7 +177,7 @@ module.exports = function(grunt) {
   grunt.registerTask('secure', ['env:secure', 'lint', 'copy:localConfig', 'concurrent:default']);
 
   // Lint task(s).
-  grunt.registerTask('lint', ['jshint', 'csslint']);
+  grunt.registerTask('lint', ['eslint', 'csslint']);
 
   // Build task(s).
   grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);

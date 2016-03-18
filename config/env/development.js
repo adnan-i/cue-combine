@@ -4,15 +4,15 @@ module.exports = {
   db: {
     pg: {
       host: process.env.PG_HOST || 'localhost',
-      port: process.env.PG_PORT ||  5432,
-      database: process.env.PG_DB || 'development',
-      poolSize: process.env.PG_POOL_SIZE || 1,
-      user: process.env.PG_USER || 'hanx',
-      password: process.env.PG_PASSWORD || 'password'
+      port: process.env.PG_PORT || 5432,
+      database: process.env.PG_DB || 'rentals',
+      poolSize: process.env.PG_POOL_SIZE || 10,
+      user: process.env.PG_USER || '',
+      password: process.env.PG_PASSWORD || ''
     },
     redis: {
       host: process.env.REDIS_HOST || '127.0.0.1',
-      port: process.env.REDIS_PORT ||  6379,
+      port: process.env.REDIS_PORT || 6379,
       database: process.env.REDIS_DB || '',
       password: process.env.REDIS_PASSWORD || '',
       partition: process.env.REDIS_PARTITION || ''
@@ -24,11 +24,18 @@ module.exports = {
     // Uncomment to enable logging to a log on the file system
     options: {
       console: '*'
-      //stream: 'access.log'
+        //stream: 'access.log'
     }
   },
   app: {
     title: 'HANX.JS - Development Environment'
+  },
+  s3: {
+    key: 'AKIAIQUDJF4UUKAPNQFQ',
+    secret: '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',
+    region: 'eu-central-1', // Frankfurt
+    bucket: 'cue-combine',
+    bucketSizes: 'cue-combine-sizes',
   },
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'APP_ID',

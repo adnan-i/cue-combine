@@ -1,0 +1,31 @@
+/* line 2, /Users/admin/my_repos/hanx.js/public/sass/style.scss */
+.gridListdemoBasicUsage md-grid-list {
+  margin: 8px; }
+
+/* line 6, /Users/admin/my_repos/hanx.js/public/sass/style.scss */
+.gridListdemoBasicUsage .gray {
+  background: #f5f5f5; }
+
+/* line 10, /Users/admin/my_repos/hanx.js/public/sass/style.scss */
+.gridListdemoBasicUsage .green {
+  background: #b9f6ca; }
+
+/* line 14, /Users/admin/my_repos/hanx.js/public/sass/style.scss */
+.gridListdemoBasicUsage .yellow {
+  background: #ffff8d; }
+
+/* line 18, /Users/admin/my_repos/hanx.js/public/sass/style.scss */
+.gridListdemoBasicUsage .blue {
+  background: #84ffff; }
+
+/* line 22, /Users/admin/my_repos/hanx.js/public/sass/style.scss */
+.gridListdemoBasicUsage .purple {
+  background: #b388ff; }
+
+/* line 26, /Users/admin/my_repos/hanx.js/public/sass/style.scss */
+.gridListdemoBasicUsage .red {
+  background: #ff8a80; }
+
+/* line 30, /Users/admin/my_repos/hanx.js/public/sass/style.scss */
+.gridListdemoBasicUsage md-grid-tile {
+  transition: all 400ms ease-out 50ms; }
